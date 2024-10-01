@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        select {
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        .result {
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+    <title>Comparatif d'Offres</title>
+</head>
+<body>
+
+    <h2>Comparatif d'Offres</h2>
+    <label for="offer-select">Choisissez une offre :</label>
+    <select id="offer-select" onchange="changeOffer()">
+        <option value="offre1">Offre 1 - Bleu clair</option>
+        <option value="offre2">Offre 2 - Orange</option>
+        <option value="offre3">Offre 3 - Bleu foncé</option>
+        <option value="offre4">Offre 4 - Rouge</option>
+        <option value="offre5">Offre 5 - Bleu France</option>
+        <option value="offre6">Offre 6 - Vert</option>
+        <option value="offre7">Offre 7 - Orange maison</option>
+        <option value="offre8">Offre 8 - Rouge noir</option>
+        <option value="offre9">Offre 9 - Rouge Agence</option>
+        <option value="offre10">Offre 10 - Noir doré</option>
+    </select>
+
+    <table id="comparison-table">
+        <thead>
+            <tr>
+                <th>Chiffre d'affaires</th>
+                <th>Rétribution Totale</th>
+                <th>Pack Mensuel</th>
+                <th>Coût Annuel du Pack</th>
+                <th>Montant Restant après 70 000 € HT</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>70 000 € HT</td>
+                <td id="retribution"></td>
+                <td id="pack"></td>
+                <td id="annual-pack"></td>
+                <td id="remaining"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Comparaison avec Notre Offre</h3>
+    <table id="our-offer-table">
+        <thead>
+            <tr>
+                <th>Chiffre d'affaires</th>
+                <th>Rétribution Totale</th>
+                <th>Pack Mensuel</th>
+                <th>Coût Annuel du Pack</th>
+                <th>Montant Restant après 70 000 € HT</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>70 000 € HT</td>
+                <td id="our-retribution"></td>
+                <td>0 € TTC (Gratuit)</td>
+                <td>0 € TTC</td>
+                <td id="our-remaining"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        const offers = {
+            "offre1": {
+                "paliers": [
+                    { "limit": 70000, "rate": 0.69 }
+                ],
+                "pack": 195
+            },
+            "offre2": {
+                "paliers": [
+                    { "limit": 80000, "rate": 0.70 },
+                    { "limit": 120000, "rate": 0.80 },
+                    { "limit": Infinity, "rate": 0.90 }
+                ],
+                "pack": 190
+            },
+            "offre3": {
+                "paliers": [
+                    { "limit": 59000, "rate": 0.75 },
+                    { "limit": 149000, "rate": 0.90 },
+                    { "limit": Infinity, "rate": 0.98 }
+                ],
+                "pack": 150
+            },
+            "offre4": {
+                "paliers": [
+                    { "limit": 39000, "rate": 0.70 },
+                    { "limit": 59000, "rate": 0.75 },
+                    { "limit": 75000, "rate": 0.80 },
+                    { "limit": 90000, "rate": 0.85 },
+                    { "limit": Infinity, "rate": 0.90 }
+                ],
+                "pack": 202
+            },
+            "offre5": {
+                "paliers": [
+                    { "limit": 39000, "rate": 0.70 },
+                    { "limit": 59000, "rate": 0.75 },
+                    { "limit": 75000, "rate": 0.80 },
+                    { "limit": 90000, "rate": 0.85 },
+                    { "limit": Infinity, "rate": 0.90 }
+                ],
+                "pack": 202
+            },
+            "offre6": {
+                "paliers": [
+                    { "limit": 25000, "rate": 0.70 },
+                    { "limit": 50000, "rate": 0.78 },
+                    { "limit": 150000, "rate": 0.90 },
+                    { "limit": Infinity, "rate": 1.00 }
+                ],
+                "pack": 226
+            },
+            "offre7": {
+                "paliers": [
+                    { "limit": 65000, "rate": 0.70 },
+                    { "limit": 200000, "rate": 0.80 },
+                    { "limit": Infinity, "rate": 1.00 }
+                ],
+                "pack": 334
+            },
+            "offre8": {
+                "paliers": [
+                    { "limit": Infinity, "rate": 0.80 }
+                ],
+                "pack": 102
+            },
+            "offre9": {
+                "paliers": [
+                    { "limit": 29000, "rate": 0.70 },
+                    { "limit": 49000, "rate": 0.75 },
+                    { "limit": 69000, "rate": 0.80 },
+                    { "limit": 89000, "rate": 0.85 },
+                    { "limit": 149000, "rate": 0.90 },
+                    { "limit": 189000, "rate": 0.95 },
+                    { "limit": Infinity, "rate": 0.99 }
+                ],
+                "pack": 80
+            },
+            "offre10": {
+                "paliers": [
+                    { "limit": Infinity, "rate": 1.00 }
+                ],
+                "pack": 228
+            }
+        };
+
+        function calculatePalier(paliers, ca) {
+            let totalRetribution = 0;
+            let remainingCA = ca;
+
+            for (let palier of paliers) {
+                if (remainingCA > palier.limit) {
+                    totalRetribution += palier.limit * palier.rate;
+                    remainingCA -= palier.limit;
+                } else {
+                    totalRetribution += remainingCA * palier.rate;
+                    break;
+                }
+            }
+
+            return totalRetribution;
+        }
+
+        function calculateOurOffer(ca) {
+            const ourPaliers = [
+                { "limit": 35000, "rate": 0.75 },
+                { "limit": 75000, "rate": 0.85 },
+                { "limit": Infinity, "rate": 1.00 }
+            ];
+
+            return calculatePalier(ourPaliers, ca);
+        }
+
+        function changeOffer() {
+            const offerKey = document.getElementById("offer-select").value;
+            const offer = offers[offerKey];
+            const ca = 70000;
+
+            // Calcule la rétribution et le montant restant pour l'offre sélectionnée
+            const retribution = calculatePalier(offer.paliers, ca);
+            const annualPack = offer.pack * 12;
+            const remaining = ca - retribution - annualPack;
+
+            // Affiche les résultats pour l'offre sélectionnée
+            document.getElementById("retribution").textContent = retribution.toFixed(2) + " € HT";
+            document.getElementById("pack").textContent = offer.pack + " € TTC";
+            document.getElementById("annual-pack").textContent = annualPack + " € TTC";
+            document.getElementById("remaining").textContent = remaining.toFixed(2) + " € HT";
+
+            // Calcule et affiche les résultats pour votre offre
+            const ourRetribution = calculateOurOffer(ca);
+            const ourRemaining = ca - ourRetribution;
+
+            document.getElementById("our-retribution").textContent = ourRetribution.toFixed(2) + " € HT";
+            document.getElementById("our-remaining").textContent = ourRemaining.toFixed(2) + " € HT";
+        }
+
+        // Initialise avec la première offre sélectionnée
+        changeOffer();
+    </script>
+
+</body>
+</html>
