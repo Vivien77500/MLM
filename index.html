@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparatif d'Offres</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .comparative-section {
+            margin-top: 20px;
+        }
+        select {
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        .highlight {
+            background-color: #e6f7ff; /* Bleu clair */
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Notre Offre</h2>
+    <table>
+        <tr>
+            <th>Chiffre d'affaires</th>
+            <th>Rétribution</th>
+            <th>Pack Mensuel</th>
+            <th>Coût Annuel du Pack</th>
+        </tr>
+        <tr>
+            <td>Jusqu'à 35 K€ HT</td>
+            <td>75%</td>
+            <td rowspan="3">Gratuit</td>
+            <td rowspan="3">0 €</td>
+        </tr>
+        <tr>
+            <td>De 35 K€ à 75 K€ HT</td>
+            <td>85%</td>
+        </tr>
+        <tr>
+            <td>Au-delà de 75 K€ HT</td>
+            <td>100%</td>
+        </tr>
+    </table>
+
+    <div class="comparative-section">
+        <h3>Comparatif d'une offre concurrente pour 70 000 € HT</h3>
+
+        <!-- Menu déroulant pour choisir l'offre à comparer -->
+        <label for="offer-select">Choisissez une offre :</label>
+        <select id="offer-select" onchange="changeOffer()">
+            <option value="offre1">Offre 1 - Bleu clair</option>
+            <option value="offre2">Offre 2 - Orange</option>
+            <option value="offre3">Offre 3 - Bleu foncé</option>
+            <option value="offre4">Offre 4 - Rouge</option>
+            <option value="offre5">Offre 5 - Bleu France</option>
+            <option value="offre6">Offre 6 - Vert</option>
+            <option value="offre7">Offre 7 - Orange maison</option>
+            <option value="offre8">Offre 8 - Rouge noir</option>
+            <option value="offre9">Offre 9 - Noir doré</option>
+        </select>
+
+        <!-- Tableau pour afficher la comparaison -->
+        <table id="comparison-table">
+            <thead>
+                <tr>
+                    <th>Chiffre d'affaires</th>
+                    <th>Rétribution</th>
+                    <th>Pack Mensuel</th>
+                    <th>Coût Annuel du Pack</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>70 000 € HT</td>
+                    <td id="retribution"></td>
+                    <td id="pack"></td>
+                    <td id="annual-pack"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Fonction pour mettre à jour la rétribution, le pack mensuel et le coût annuel selon l'offre sélectionnée
+        function changeOffer() {
+            const offerSelect = document.getElementById("offer-select").value;
+            let retribution, pack, annualPack;
+
+            // Conditions selon les offres sélectionnées
+            switch (offerSelect) {
+                case "offre1":
+                    retribution = "69%";
+                    pack = "195 € TTC";
+                    annualPack = "2 340 € TTC";
+                    break;
+                case "offre2":
+                    retribution = "70%";
+                    pack = "190 € TTC";
+                    annualPack = "2 280 € TTC";
+                    break;
+                case "offre3":
+                    retribution = "90%";
+                    pack = "150 € TTC";
+                    annualPack = "1 800 € TTC";
+                    break;
+                case "offre4":
+                    retribution = "80%";
+                    pack = "202 € TTC";
+                    annualPack = "2 424 € TTC";
+                    break;
+                case "offre5":
+                    retribution = "80%";
+                    pack = "202 € TTC";
+                    annualPack = "2 424 € TTC";
+                    break;
+                case "offre6":
+                    retribution = "90%";
+                    pack = "226 € TTC";
+                    annualPack = "2 712 € TTC";
+                    break;
+                case "offre7":
+                    retribution = "80%";
+                    pack = "334 € TTC";
+                    annualPack = "4 008 € TTC";
+                    break;
+                case "offre8":
+                    retribution = "80%";
+                    pack = "102 € TTC";
+                    annualPack = "1 224 € TTC";
+                    break;
+                case "offre9":
+                    retribution = "100%";
+                    pack = "228 € TTC";
+                    annualPack = "2 736 € TTC";
+                    break;
+                default:
+                    retribution = "N/A";
+                    pack = "N/A";
+                    annualPack = "N/A";
+            }
+
+            // Mise à jour du tableau
+            document.getElementById("retribution").textContent = retribution;
+            document.getElementById("pack").textContent = pack;
+            document.getElementById("annual-pack").textContent = annualPack;
+        }
+
+        // Initialiser avec la première offre sélectionnée
+        changeOffer();
+    </script>
+
+</body>
+</html>
